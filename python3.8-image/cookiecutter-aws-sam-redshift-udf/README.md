@@ -2,11 +2,14 @@
 
 This is a [Cookiecutter](https://github.com/audreyr/cookiecutter) template to create a Serverless Redshift Python UDF on Serverless Application Model (SAM) and Python 3.8 container image.
 
-It is important to note that you should not try to `git clone` this project but use `SAM` CLI instead as ``{{cookiecutter.project_slug}}`` will be rendered based on your input and therefore all variables and files will be rendered properly.
-
 ## Usage
 
-Generate a new SAM based Serverless App: `sam init --location gh:ajos/custom-sam-cli-app-templates/python3.8-image/cookiecutter-aws-sam-redshift-udf`
+Generate a new SAM based Serverless App: 
+```bash
+git clone git@github.com:ajos/custom-aws-sam-templates.git
+## generate project 
+sam init --location custom-aws-sam-templates/python3.8-image/cookiecutter-aws-sam-redshift-udf
+```
 
 You'll be prompted a few questions to help this cookiecutter template to scaffold this project and after its completed you should see a new folder at your current path with the name of the project you gave as input.
 
