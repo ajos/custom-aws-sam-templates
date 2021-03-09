@@ -1,0 +1,45 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+    {{ cookiecutter.project_name }}
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+    Function:
+        Timeout: 5
+        Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
+{%- if cookiecutter.include_safe_deployment == "y" %}
+        AutoPublishAlias: live # More info about Safe Deployments: https://github.com/awslabs/serverless-application-model/blob/master/docs/safe_lambda_deployments.rst
+        DeploymentPreference:
+            Type: Linear10PercentEvery1Minute {% endif %}
+        Environment:
+            Variables:
+                # Powertools env vars: https://awslabs.github.io/aws-lambda-powertools-python/#environment-variables
+                LOG_LEVEL: INFO
+                POWERTOOLS_LOGGER_SAMPLE_RATE: 0.1
+                POWERTOOLS_LOGGER_LOG_EVENT: false
+                POWERTOOLS_METRICS_NAMESPACE: RedshiftUdfApplication
+                POWERTOOLS_SERVICE_NAME: redshift_udf
+
+Resources:
+    {{ cookiecutter.function_name }}Function:
+        Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+        Properties:
+            PackageType: Image
+            Description: Redshift UDF {{ cookiecutter.function_name }} function
+            Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+                Variables:
+                    PARAM1: VALUE
+        Metadata:
+          Dockerfile: Dockerfile
+          DockerContext: ./app
+          DockerTag: py38-{{ cookiecutter.function_name }}-v1
+
+Outputs:
+    {{ cookiecutter.function_name }}Function:
+      Description: "Redshift UDF {{ cookiecutter.function_name }} Lambda Function ARN"
+      Value: !GetAtt {{ cookiecutter.function_name }}Function.Arn
+
+    {{ cookiecutter.function_name }}FunctionIamRole:
+      Description: "Implicit IAM Role created for {{ cookiecutter.function_name }} function"
+      Value: !GetAtt {{ cookiecutter.function_name }}FunctionRole.Arn
