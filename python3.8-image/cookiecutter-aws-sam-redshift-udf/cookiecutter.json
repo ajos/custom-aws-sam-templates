@@ -1,0 +1,5 @@
+{
+    "project_name": "redshift_udf_test3",
+    "function_name": "RedshiftUdfTest3",
+    "include_safe_deployment": "n"
+}

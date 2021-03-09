@@ -1,0 +1,15 @@
+{
+  "request_id" : "23FF1F97-F28A-44AA-AB67-266ED976BF40",
+  "cluster" : "arn:aws:redshift:xxxx",
+  "user" : "master",
+  "database" : "db1",
+  "external_function": "public.foo",
+  "query_id" : 5678234,
+  "num_records" : 4,
+  "arguments": [
+    ["Customer", "id", "0"],
+    ["Customer", "id", "1"],
+    ["Customer", "id", "2"],
+    ["Customer", "id", "3"]
+  ]
+}
